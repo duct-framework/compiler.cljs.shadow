@@ -1,6 +1,5 @@
-(ns duct.compiler.cljs.shadow-cljs)
+(ns duct.compiler.cljs.shadow-cljs
+  (:require [integrant.core :as ig]))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defmethod ig/init-key :duct.compiler.cljs/shadow-cljs [_ _options]
+  (prn :compiled))
