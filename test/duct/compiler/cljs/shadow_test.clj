@@ -1,6 +1,6 @@
-(ns duct.compiler.cljs.shadow-cljs-test
+(ns duct.compiler.cljs.shadow-test
   (:require [clojure.test :refer :all]
-            [duct.compiler.cljs.shadow-cljs :refer :all]))
+            [duct.compiler.cljs.shadow :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."

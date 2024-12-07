@@ -1,2 +1,2 @@
-{:duct.compiler.cljs/shadow-cljs [:duct.compiler/cljs]
+{:duct.compiler.cljs/shadow [:duct.compiler/cljs]
  :duct.compiler/cljs [:duct/compiler]}
