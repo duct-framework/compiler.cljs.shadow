@@ -13,13 +13,16 @@
       (rt/start-all)))
 
 (defmacro ^:private with-runtime [runtime & body]
-  `(let [runtime# ~runtime]
-     (try
-       (runtime/set-instance! runtime#)
-       (do ~@body)
-       (finally
-         (runtime/reset-instance!)
-         (rt/stop-all runtime#)))))
+  `(let [body-fn# (fn [] ~@body)]
+     (if (runtime/get-instance)
+       (body-fn#)
+       (let [runtime# ~runtime]
+         (try
+           (runtime/set-instance! runtime#)
+           (body-fn#)
+           (finally
+             (runtime/reset-instance!)
+             (rt/stop-all runtime#)))))))
 
 (defn- normalize-config [config]
   (-> (merge config/default-config config config)
