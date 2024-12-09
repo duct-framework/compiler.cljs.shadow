@@ -2,6 +2,7 @@
   (:require [integrant.core :as ig]
             [shadow.cljs.devtools.api :as api]
             [shadow.cljs.devtools.config :as config]
+            [shadow.cljs.devtools.server :as server]
             [shadow.cljs.devtools.server.common :as common]
             [shadow.cljs.devtools.server.runtime :as runtime]
             [shadow.runtime.services :as rt]))
@@ -31,8 +32,20 @@
     (with-runtime (make-runtime config)
       (api/release* (-> config :builds :cljs) {}))))
 
-(defmethod ig/init-key ::watch [_ _options]
-  (prn :worker-started))
+(defmethod ig/init-key ::server [_ config]
+  (let [config (normalize-config config)]
+    (server/start! config)
+    (api/watch* (-> config :builds :cljs) {:autobuild false})
+    :cljs))
 
-(defmethod ig/halt-key! ::watch [_ _worker]
-  (prn :worker-stopped))
+(defmethod ig/halt-key! ::server [_ build-id]
+  (api/stop-worker build-id)
+  (server/stop!))
+
+(defmethod ig/suspend-key! ::server [_ _])
+
+(defmethod ig/resume-key ::server [_ new-config old-config build-id]
+  (if (= new-config old-config)
+    (doto build-id api/watch-compile!)
+    (do (ig/halt-key! build-id)
+        (ig/init-key new-config))))
