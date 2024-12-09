@@ -1,2 +1,4 @@
-{:duct.compiler.cljs/shadow [:duct.compiler/cljs]
+{:duct.compiler.cljs.shadow/release [:duct.compiler.cljs/shadow]
+ :duct.compiler.cljs.shadow/server [:duct.compiler.cljs/shadow]
+ :duct.compiler.cljs/shadow [:duct.compiler/cljs]
  :duct.compiler/cljs [:duct/compiler]}
