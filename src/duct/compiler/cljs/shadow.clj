@@ -24,22 +24,22 @@
              (runtime/reset-instance!)
              (rt/stop-all runtime#)))))))
 
-(defn- normalize-config [config]
+(defn- normalize-config [key config]
   (-> (merge config/default-config config config)
       (dissoc :build)
-      (assoc-in [:builds :cljs] (:build config))
+      (assoc-in [:builds key] (:build config))
       (config/normalize)))
 
-(defmethod ig/init-key ::release [_ config]
-  (let [config (normalize-config config)]
+(defmethod ig/init-key ::release [key config]
+  (let [config (normalize-config key config)]
     (with-runtime (make-runtime config)
-      (api/release* (-> config :builds :cljs) {}))))
+      (api/release* (-> config :builds (get key)) {}))))
 
-(defmethod ig/init-key ::server [_ config]
-  (let [config (normalize-config config)]
+(defmethod ig/init-key ::server [key config]
+  (let [config (normalize-config key config)]
     (server/start! config)
-    (api/watch* (-> config :builds :cljs) {:autobuild false})
-    :cljs))
+    (api/watch* (-> config :builds (get key)) {:autobuild false})
+    key))
 
 (defmethod ig/halt-key! ::server [_ build-id]
   (api/stop-worker build-id)
@@ -47,8 +47,8 @@
 
 (defmethod ig/suspend-key! ::server [_ _])
 
-(defmethod ig/resume-key ::server [_ new-config old-config build-id]
+(defmethod ig/resume-key ::server [key new-config old-config build-id]
   (if (= new-config old-config)
     (doto build-id api/watch-compile!)
-    (do (ig/halt-key! build-id)
-        (ig/init-key new-config))))
+    (do (ig/halt-key! key build-id)
+        (ig/init-key key new-config))))
