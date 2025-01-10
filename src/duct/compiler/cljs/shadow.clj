@@ -33,7 +33,8 @@
 (defmethod ig/init-key ::release [key config]
   (let [config (normalize-config key config)]
     (with-runtime (make-runtime config)
-      (api/release* (-> config :builds (get key)) {}))))
+      (api/release* (-> config :builds (get key)) {}))
+    key))
 
 (defmethod ig/init-key ::server [key config]
   (let [config (normalize-config key config)]
