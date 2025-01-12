@@ -13,11 +13,11 @@ This library is still very new and API may change.
 
 Add the following dependency to your deps.edn file:
 
-    org.duct-framework/compiler.cljs.shadow {:mvn/version "0.1.1"}
+    org.duct-framework/compiler.cljs.shadow {:mvn/version "0.1.2"}
 
 Or to your Leiningen project file:
 
-    [org.duct-framework/compiler.cljs.shadow "0.1.1"]
+    [org.duct-framework/compiler.cljs.shadow "0.1.2"]
 
 ## Usage
 
