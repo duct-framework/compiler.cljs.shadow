@@ -36,8 +36,17 @@
       (api/release* (-> config :builds (get key)) {}))
     key))
 
+(defn- quieten-loggers [loggers]
+  (doseq [logger loggers]
+    (doto (java.util.logging.Logger/getLogger logger)
+      (.setLevel java.util.logging.Level/WARNING))))
+
 (defmethod ig/init-key ::server [key config]
   (let [config (normalize-config key config)]
+    ;; Undertow has a lot of noisy loggers so we'll change the default log
+    ;; level to quieten them. Unfortunately the loggers seem to be global, so
+    ;; this will affect other Undertow instances if any exist.
+    (quieten-loggers ["io.undertow" "org.jboss.threads" "org.xnio"])
     (server/start! config)
     (api/watch* (-> config :builds (get key)) {:autobuild false})
     key))
