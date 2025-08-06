@@ -1,4 +1,4 @@
-(defproject org.duct-framework/compiler.cljs.shadow "0.1.2"
+(defproject org.duct-framework/compiler.cljs.shadow "0.1.3"
   :description "Integrant methods for running Shadow CLJS"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
