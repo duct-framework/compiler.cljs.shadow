@@ -1,3 +1,3 @@
-{:deps {org.clojure/clojure {:mvn/version "1.12.1"}
-        integrant/integrant {:mvn/version "0.13.1"}
-        thheller/shadow-cljs {:mvn/version "3.1.8"}}}
+{:deps {org.clojure/clojure {:mvn/version "1.12.2"}
+        integrant/integrant {:mvn/version "1.0.0"}
+        thheller/shadow-cljs {:mvn/version "3.2.0"}}}
