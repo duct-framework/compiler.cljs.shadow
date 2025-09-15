@@ -1,0 +1,24 @@
+{:duct.compiler.cljs.shadow/release
+ {:doc
+  "When initiated, compiles ClojureScript files into production-ready
+  JavaScript.
+
+  Takes a [Shadow CLJS][1] configuration map, with the `:builds` map swapped
+  out for a singular build configuration under the `:build` key. See the
+  [Shadow CLJS documentation][2] for more information.
+
+  [1]: https://github.com/thheller/shadow-cljs
+  [2]: https://shadow-cljs.github.io/docs/UsersGuide.html#config"}
+
+ :duct.compiler.cljs.shadow/server
+ {:doc
+  "Starts a [Shadow CLJS][1] development server that re-compiles the project's
+  ClojureScript and pushes any changes to the browser whenever the system is
+  reset.
+
+  Takes a [Shadow CLJS][1] configuration map, with the `:builds` map swapped
+  out for a singular build configuration under the `:build` key. See the
+  [Shadow CLJS documentation][2] for more information.
+
+  [1]: https://github.com/thheller/shadow-cljs
+  [2]: https://shadow-cljs.github.io/docs/UsersGuide.html#config"}}
